@@ -1,0 +1,58 @@
+---
+title: "After class 2"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(here)
+library(janitor)
+```
+
+```{r}
+mack_verts <- read_csv(here::here("data", "AS00601.csv"))
+view(mack_verts)
+names(mack_verts)
+mack_verts <- clean_names(mack_verts)
+```
+
+```{r}
+mc_wt_5 <- mack_verts$weight[5]
+mc_length_8_20 <- mack_verts$length1[8]
+mc_dates <- mack_verts$sampledate
+
+```
+
+```{r}
+mc_salamanders <- filter(mack_verts, species == "DITE")
+```
+
+```{r}
+plot <- ggplot(data = mc_salamanders, aes(x= length1, y= weight)) + labs(title = "Salemanders", y = "Weight (g)",x= "Length (mm)", subtitle = "Length vs. Weight") + geom_point()
+
+plot
+```
+
+```{r}
+ggsave(here::here("figs", "salamander_size.png"), height = 6, width = 7)
+```
+
+```{r}
+mc_trout <- filter(mack_verts, species == "ONCL")
+```
+
+```{r}
+plot2 <- ggplot(data = mc_trout, aes(x= length1, y= weight, col = reach)) + labs(title = "Trout", y = "Weight (g)",x= "Length (mm)", subtitle = "Length vs. Weight") + facet_wrap(~reach) + scale_color_manual(values = c("red", "purple", "blue")) + geom_point()
+
+plot2
+```
+
+```{r}
+ggsave(here::here("figs", "cutthroat_size.png"), height = 6, width = 7)
+```
+
+
+
+
+
