@@ -1,16 +1,20 @@
 ---
-title: "After class 2"
+title: "After Class 2"
 format: html
 editor: visual
+execute: 
+  warning: false 
 ---
 
 ```{r}
+# Load library
 library(tidyverse)
 library(here)
 library(janitor)
 ```
 
 ```{r}
+# Read in Data
 mack_verts <- read_csv(here::here("data", "AS00601.csv"))
 view(mack_verts)
 names(mack_verts)
@@ -25,30 +29,36 @@ mc_dates <- mack_verts$sampledate
 ```
 
 ```{r}
+# Made subset of salamander data
 mc_salamanders <- filter(mack_verts, species == "DITE")
 ```
 
 ```{r}
-plot <- ggplot(data = mc_salamanders, aes(x= length1, y= weight)) + labs(title = "Salemanders", y = "Weight (g)",x= "Length (mm)", subtitle = "Length vs. Weight") + geom_point()
+# Plot salamander data
+plot <- ggplot(data = mc_salamanders, aes(x= length1, y= weight)) + labs(title = "Pacific Giant Salamanders", y = "Weight (g)",x= "Length (mm)", subtitle = "Length vs. Weight") + geom_point(colour = "red", size = .7, alpha = 0.3)
 
 plot
 ```
 
 ```{r}
+# Save scatter plot into figs folder
 ggsave(here::here("figs", "salamander_size.png"), height = 6, width = 7)
 ```
 
 ```{r}
+# Made subset of trout data
 mc_trout <- filter(mack_verts, species == "ONCL")
 ```
 
 ```{r}
-plot2 <- ggplot(data = mc_trout, aes(x= length1, y= weight, col = reach)) + labs(title = "Trout", y = "Weight (g)",x= "Length (mm)", subtitle = "Length vs. Weight") + facet_wrap(~reach) + scale_color_manual(values = c("red", "purple", "blue")) + geom_point()
+# Plot trout data
+plot2 <- ggplot(data = mc_trout, aes(x= length1, y= weight, col = reach)) + labs(title = "Cutthroat Trout", y = "Weight (g)",x= "Length (mm)", subtitle = "Length vs. Weight") + facet_wrap(~reach) + scale_color_manual(values = c("yellow", "orange", "red")) + geom_point(alpha = .5, size = 2,)
 
 plot2
 ```
 
 ```{r}
+# Save scatter plot into figs folder
 ggsave(here::here("figs", "cutthroat_size.png"), height = 6, width = 7)
 ```
 
